@@ -51,7 +51,7 @@
         </svg>
       </a>
       <div class="mt-8 bg-white overflow-hidden shadow sm:rounded-lg p-6">
-        <h2 class="text-2xl leading-7 font-semibold">
+        <h2 @click="fetchData" class="text-2xl leading-7 font-semibold">
           Welcome to your Nuxt Application
         </h2>
         <p class="mt-3 text-gray-600">
@@ -116,7 +116,23 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "NuxtTutorial",
+  methods: {
+    async fetchData() {
+      try {
+        const response = await axios.get("http://localhost:4000/getPost");
+        if (response) {
+          console.log(response, "rr");
+        }
+      } catch (error) {
+        this.error = error;
+      }
+    },
+  },
+  mounted() {
+    this.fetchData();
+  },
 };
 </script>
