@@ -116,13 +116,13 @@
 </template>
 
 <script>
-import axios from "axios";
+
 export default {
   name: "NuxtTutorial",
   methods: {
     async fetchData() {
       try {
-        const response = await axios.get("http://localhost:4000/getPost");
+        const response = await this.$api.get('/getPost');
         if (response) {
           console.log(response, "rr");
         }

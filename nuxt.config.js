@@ -24,7 +24,15 @@ export default {
       autoprefixer: {},
     },
   },
-
+  plugins: [
+    '~/plugins/axios.js', // Register the plugin
+  ],
+  env: {
+    baseUrl: process.env.API_BASE_URL || 'http://localhost:3000'
+  },
+  axios: {
+    baseURL: 'process.env.API_BASE_URL', // Default base URL
+  },
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
@@ -35,7 +43,7 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: [ '@nuxtjs/dotenv',],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
