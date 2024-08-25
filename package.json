@@ -9,6 +9,8 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@nuxtjs/auth-next": "^5.0.0-1667386184.dfbbb54",
+    "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/dotenv": "^1.4.2",
     "axios": "^0.21.4",
     "consola": "^2.15.3",
@@ -21,6 +23,8 @@
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^5.3.5",
-    "postcss": "^8.4.17"
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.41",
+    "tailwindcss": "^3.4.10"
   }
 }

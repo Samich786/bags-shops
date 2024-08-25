@@ -1,12 +1,18 @@
-import axios from 'axios';
+// plugins/axios.js
+export default function({ $axios, app }) {
 
-export default function ({ $axios }, inject) {
-  // Use the environment variable for baseURL
-  const api = axios.create({
-    baseURL: process.env.baseUrl, // Access the baseURL from .env
-    timeout: 10000,
+
+  $axios.onRequest(config => {
+   
+
+    // Determine where to fetch the token from
+    let token;
+   
+      token = app.$auth.strategy.token.get(); // Get token from local storage
+   
+
+    if (token) {
+      config.headers.common['Authorization'] = `Bearer ${token}`;
+    }
   });
-
-  // Rest of your plugin code...
-  inject('api', api);
 }
