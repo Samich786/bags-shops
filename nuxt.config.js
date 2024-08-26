@@ -1,5 +1,6 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
+  ssr: false,
   head: {
     title: "bags-shops",
     htmlAttrs: {
@@ -19,15 +20,18 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '~/plugins/axios.js', // Register the plugin
-    '~/plugins/end-points.js', // Register the plugin
+    "~/plugins/axios.js", // Register the plugin
+    "~/plugins/end-points.js", // Register the plugin
   ],
 
   // Environment variables
   env: {
-    baseUrl: process.env.API_BASE_URL || 'http://localhost:4000'
+    baseUrl: process.env.API_BASE_URL || "http://localhost:4000",
   },
-
+  router: {
+    middleware: ["auth"],
+    base: "/",
+  },
   // Authentication
   auth: {
     strategies: {
@@ -37,8 +41,8 @@ export default {
           required: true,
           type: "Bearer",
           global: true,
-          maxAge: 60 * 60 * 24 * 15, // 15 days
-          autoExtend: false, // Disable auto extension
+          // maxAge: 60 * 60 * 24 * 15, // 15 days
+          // autoExtend: false, // Disable auto extension
         },
         user: {
           property: "data",
@@ -47,7 +51,7 @@ export default {
           login: {
             url: "/auth/login",
             method: "post",
-            // propertyName: 'response',
+            propertyName: "data.data.token",
           },
           logout: { url: "/auth/logout", method: "post" },
           user: { url: "/auth/me", method: "get" },
@@ -69,10 +73,6 @@ export default {
       //   },
       // },
     },
-    isAuthenticated() {
-      // Check if token exists in local storage
-      return Boolean(localStorage.getItem('auth._token.local'));
-    },
     redirect: {
       login: "/auth/login",
       logout: "/auth/login",
@@ -82,7 +82,7 @@ export default {
   },
   // Axios configuration
   axios: {
-    baseURL: process.env.API_BASE_URL || 'http://localhost:4000', // Correctly reference the environment variable
+    baseURL: process.env.API_BASE_URL || "http://localhost:4000", // Correctly reference the environment variable
     // withCredentials: true,
   },
 
@@ -97,9 +97,9 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    '@nuxtjs/axios', // Ensure Axios module is loaded
-    '@nuxtjs/dotenv', // Make sure dotenv is loaded to use environment variables
-    '@nuxtjs/auth-next'
+    "@nuxtjs/axios", // Ensure Axios module is loaded
+    "@nuxtjs/dotenv", // Make sure dotenv is loaded to use environment variables
+    "@nuxtjs/auth-next",
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -111,5 +111,4 @@ export default {
       },
     },
   },
-  
-}
+};

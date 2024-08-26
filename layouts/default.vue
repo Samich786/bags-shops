@@ -1,15 +1,22 @@
 <template>
   <div>
-    <Nuxt/>
+    <div class="h-full">
+      <TopHeader />
+      <div>
+        <Nuxt />
+      </div>
+    </div>
   </div>
 </template>
 
-<script> 
+<script>
+import TopHeader from "~/components/layouts/Header.vue";
+
 export default {
-    layout: 'default',
-}
+  components: {
+    TopHeader,
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

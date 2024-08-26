@@ -12,12 +12,9 @@
 
 <script>
 export default {
-  name: 'IndexPage',
-  middleware: ['auth'],
-  data(){
-    return {
-
-    }
+  name: "IndexPage",
+  data() {
+    return {};
   },
   methods: {
     async logout() {
@@ -26,17 +23,17 @@ export default {
         await this.$auth.logout(); // Ensure this method correctly clears authentication state
 
         // Optionally remove the token manually (usually handled by $auth.logout())
-        localStorage.removeItem('auth._token.local');
+        localStorage.removeItem("auth._token.local");
 
         // Redirect to the login page after successful logout
         // this.$router.push('/login');
       } catch (error) {
         // Handle any errors during logout
-        console.error('Logout error:', error);
+        console.error("Logout error:", error);
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
