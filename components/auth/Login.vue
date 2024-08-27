@@ -9,7 +9,7 @@
           >
           <input
             v-model="email"
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-300"
+            class="shadow appearance-none border bg-white rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-300"
             id="email"
             type="email"
             placeholder="Enter your email"
@@ -24,7 +24,7 @@
           >
           <input
             v-model="password"
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:ring focus:border-blue-300"
+            class="shadow appearance-none border rounded bg-white w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:ring focus:border-blue-300"
             id="password"
             type="password"
             placeholder="Enter your password"

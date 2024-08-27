@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="h-full">
+    <div class="h-screen w-full bg-[#F5F5F5]">
       <TopHeader />
-      <div class="bg-[#F5F5F5] h-calc(100vh - 64px) overflow-y-auto">
+      <div class="bg-[#F5F5F5] scroll-container mt-16">
         <Nuxt />
       </div>
     </div>
@@ -19,4 +19,14 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.scroll-container {
+  max-height: 100vh !important; /* Set the max height to make sure scrolling is needed */
+  overflow-y: auto !important; /* Allow vertical scrolling */
+  scrollbar-width: none !important; /* Firefox */
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, and Edge */
+}
+</style>
