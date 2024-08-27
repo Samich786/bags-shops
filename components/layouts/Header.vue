@@ -22,7 +22,8 @@
               <div
                 v-for="data in categories"
                 :key="data.id"
-                class="border-b cursor-pointer border-[#e9edf2] py-2 px-3 text-[#898c8f] hover:text-[#FFD333]" @click="selectCategory(data)"
+                class="border-b cursor-pointer border-[#e9edf2] py-2 px-3 text-[#898c8f] hover:text-[#FFD333]"
+                @click="selectCategory(data)"
               >
                 <span class="text-[12px] font-medium bg-white">
                   {{ data.name }}
@@ -39,7 +40,7 @@
           <div>
             <span
               class="text-[14px] font-bold text-white hover:text-[#FFD333] cursor-pointer"
-              :class="{ 'text-[#FFD333]': item.isActive }"
+              :class="{ 'text-yellow-400': item.isActive }"
               @click="setActive(item)"
               >{{ item.name }}</span
             >
@@ -60,6 +61,12 @@
             class="border border-white rounded-full text-white font-medium px-1 text-sm py-[1px]"
             >0</span
           >
+        </div>
+        <div
+          class="text-white text-sm font-medium cursor-pointer"
+          @click="logout"
+        >
+          <span>Logout</span>
         </div>
       </div>
     </div>
@@ -175,6 +182,18 @@ export default {
     selectCategory(data) {
       this.categoriesType = data.name;
       // this.isOpenCategory = false;
+    },
+    async logout() {
+      try {
+        // Handle logout with proper state management
+        await this.$auth.logout(); // Ensure this method correctly clears authentication state
+
+        // Optionally remove the token manually (usually handled by $auth.logout())
+        localStorage.removeItem("auth._token.local");
+      } catch (error) {
+        // Handle any errors during logout
+        console.error("Logout error:", error);
+      }
     },
   },
 };
