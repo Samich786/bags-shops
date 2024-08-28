@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="grid lg:grid-cols-3 gap-3 md:grid-cols-2 px-8 py-5">
-      <div class="col-span-2 rounded-lg">
+      <div class="lg:col-span-2 xss:col-span-3 rounded-lg">
         <div class="carousel w-full relative">
           <!-- Carousel Items -->
           <div
@@ -45,7 +45,7 @@
                   class="btn btn-xs border border-white bg-transparent hover:bg-white hover:border-white"
                   :class="[
                     {
-                      'bg-[#fff]': activeIndex === index,
+                      'bg-white': activeIndex === index,
                     },
                     { 'w-7': activeIndex === index },
                   ]"
@@ -57,7 +57,7 @@
           </div>
         </div>
       </div>
-      <div class="col-span-1">
+      <div class="lg:col-span-1 xss:col-span-3">
         <div class="flex flex-col gap-4 justify-center items-center">
           <div
             class="relative h-[216px] w-full"
@@ -77,7 +77,7 @@
                   >Special Offer</span
                 >
                 <button
-                  class="btn btn-outline text-[#3D464D] border-2 mt-3 bg-[#FFD333] border-[#FFD333] hover:bg-yellow-400 hover:text-[#] rounded-[2px] hover:border-none"
+                  class="btn btn-outline text-[#3D464D] border-2 mt-3 bg-[#FFD333] border-[#FFD333] hover:bg-yellow-400 hover:text-white rounded-[2px] hover:border-none"
                 >
                   Shop Now
                 </button>
@@ -102,7 +102,7 @@
                   >Special Offer</span
                 >
                 <button
-                  class="btn btn-outline text-[#3D464D] border-2 mt-3 bg-[#FFD333] border-[#FFD333] hover:bg-yellow-400 hover:text-[#3D464D] rounded-[2px] hover:border-none"
+                  class="btn btn-outline text-[#3D464D] border-2 mt-3 bg-[#FFD333] border-[#FFD333] hover:bg-yellow-400 hover:text-white rounded-[2px] hover:border-none"
                 >
                   Shop Now
                 </button>
@@ -113,9 +113,11 @@
       </div>
     </div>
     <!-- cards section -->
-    <div class="grid lg:grid-cols-4 gap-5 md:grid-cols-2 px-8 py-5">
+    <div
+      class="grid lg:grid-cols-4 gap-5 md:grid-cols-2 xs:grid-cols-1 px-8 py-5 mt-5"
+    >
       <div
-        class="col-span-1n px-7 py-2 bg-white"
+        class="col-span-1 px-7 py-2 bg-white"
         v-for="item in carditem"
         :key="item.id"
       >
@@ -127,27 +129,80 @@
         </div>
       </div>
     </div>
-    <div class="mt-10 px-8"> 
-      <span class="text-[30px] font-bold text-[#3D464D]">Categories</span>
+    <div class="mt-10 px-8 flex gap-5 items-center">
+      <span class="text-[35px] font-semibold text-[#3D464D]">CATEGORIES</span>
+      <div class="border-b border-dashed border-[#BEC5CB] w-full mt-2"></div>
     </div>
-    <div class="grid lg:grid-cols-4 gap-5 md:grid-cols-2 px-8 py-5">
+    <div
+      class="grid lg:grid-cols-4 gap-8 md:grid-cols-2 xs:grid-cols-1 px-8 py-5 mt-3"
+    >
       <div
-        class="col-span-1n bg-white"
+        class="col-span-1 bg-white text-[#3D464D] group"
         v-for="item in categories"
         :key="item.id"
       >
-        <div class="grid grid-cols-2 py-2 px-2 items-center">
-          <div class="">
-            <img :src="item.img" alt="" class="h-28 w-28" />
+        <div class="grid grid-cols-8 items-center overflow-hidden">
+          <!-- Image Container -->
+          <div class="col-span-3 overflow-hidden px-2">
+            <!-- Image with zoom effect on card hover -->
+            <img
+              :src="item.img"
+              alt=""
+              class="h-full w-full transition-transform duration-300 ease-in-out transform group-hover:scale-125 group-hover:rotate-2"
+            />
           </div>
 
-          <div class=" z-20 flex flex-col items-start">
-            <span class="text-lg font-semibold text-[#3D464D]">{{
-              item.name
-            }}</span>
-            <span class="text-sm font-normal text-[#3D464D]">{{
-              item.count
-            }} Products</span>
+          <!-- Text Content -->
+          <div
+            class="col-span-5 z-20 flex flex-col items-start pl-5 h-full justify-center group-hover:bg-[#FFD333]"
+          >
+            <span class="text-lg font-bold">{{ item.name }}</span>
+            <span class="text-sm font-normal mt-1"
+              >{{ item.count }} Products</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- New Arrivals section -->
+    <div class="mt-10 px-8 flex gap-5 items-center w-full">
+      <div class="w-full">
+        <span class="text-[35px] font-semibold text-[#3D464D]"
+          >FEATURED PRODUCTS</span
+        >
+      </div>
+      <div
+        class="border-b border-dashed border-[#BEC5CB] mt-2"
+        style="width: calc(100% - 253px)"
+      ></div>
+    </div>
+    <div
+      class="grid lg:grid-cols-4 gap-8 md:grid-cols-2 xs:grid-cols-1 px-8 py-5 mt-3"
+    >
+      <div class="col-span-1 group" v-for="item in categories" :key="item.id">
+        <div class="card card-compact bg-white rounded-[1px] w-full h-[400px]">
+          <!-- Custom height -->
+          <div
+            class="overflow-hidden h-full w-full flex justify-center items-center"
+          >
+            <img
+              src="/image/cam.jpg"
+              class="transition-transform duration-300 ease-in-out transform group-hover:scale-125 group-hover:rotate-2 max-w-full max-h-full object-contain"
+              alt="Shoes"
+            />
+          </div>
+          <div class="card-body z-20 items-center text-center">
+            <span class="text-xl font-semibold text-[#3D464D]">Shoes!</span>
+            <div class="flex gap-3 items-center">
+              <span class="text-lg font-bold text-[#3D464D]">$500.00</span>
+              <span class="text-[15px] text-[#6C757D] font-normal line-through"
+                >$900.00</span
+              >
+            </div>
+            <div class="">
+              <Rating :rating="currentRating" />
+              <span class="text-sm font-normal">(99)</span>
+            </div>
           </div>
         </div>
       </div>
@@ -156,10 +211,14 @@
 </template>
 
 <script>
+import rating from "../components/global/rating.vue";
+
 export default {
   name: "IndexPage",
+  components: { rating },
   data() {
     return {
+      currentRating: 4,
       activeIndex: 0, // Tracks the current active carousel item
       items: [
         {
@@ -236,7 +295,7 @@ export default {
         },
         {
           id: 5,
-          name: "Sports & Outdoors",
+          name: "Sports Products",
           img: "/image/cam.jpg",
           count: 100,
         },
@@ -248,19 +307,19 @@ export default {
         },
         {
           id: 7,
-          name: "Beauty Products",
+          name: "Beauty Fashion",
           img: "/image/cam.jpg",
           count: 100,
         },
         {
           id: 8,
-          name: "Computers & Tablets",
+          name: "Tech Devices",
           img: "/image/cam.jpg",
           count: 100,
         },
         {
           id: 9,
-          name: "Kids & Baby Products",
+          name: "Kids Products",
           img: "/image/cam.jpg",
           count: 100,
         },
@@ -283,7 +342,15 @@ export default {
 
 <style scoped>
 .carousel-item {
-  transition: opacity 0.5s ease-in-out; /* Add a smooth transition for opacity */
+  transition: opacity 0.5s ease-in-out;
+  /* Add a smooth transition for opacity */
+}
+.zoom-image {
+  transition: transform 0.3s ease;
+}
+
+.zoom-image:hover {
+  transform: scale(1.1);
 }
 /* Add any scoped styles here */
 </style>
