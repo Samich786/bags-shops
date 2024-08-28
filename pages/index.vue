@@ -165,41 +165,77 @@
       </div>
     </div>
     <!-- New Arrivals section -->
-    <div class="mt-10 px-8 flex gap-5 items-center w-full">
-      <div class="w-full">
-        <span class="text-[35px] font-semibold text-[#3D464D]"
-          >FEATURED PRODUCTS</span
-        >
-      </div>
-      <div
-        class="border-b border-dashed border-[#BEC5CB] mt-2"
-        style="width: calc(100% - 253px)"
-      ></div>
-    </div>
+    <div class="mt-10 px-8 flex items-center">
+  <!-- Title Container -->
+  <div class="flex-shrink-0">
+    <span class="text-[35px] font-semibold text-[#3D464D]">NEW ARRIVALS</span>
+  </div>
+  <!-- Dashed Border Container -->
+  <div class="flex-grow border-b border-dashed border-[#BEC5CB] ml-4 mt-2"></div>
+</div>
     <div
       class="grid lg:grid-cols-4 gap-8 md:grid-cols-2 xs:grid-cols-1 px-8 py-5 mt-3"
     >
       <div class="col-span-1 group" v-for="item in categories" :key="item.id">
-        <div class="card card-compact bg-white rounded-[1px] w-full h-[400px]">
+        <div class="card card-compact bg-white   rounded-[1px] w-full h-[400px]">
           <!-- Custom height -->
           <div
-            class="overflow-hidden h-full w-full flex justify-center items-center"
+            class="overflow-hidden h-full w-full  flex justify-center items-center"
           >
             <img
               src="/image/cam.jpg"
-              class="transition-transform duration-300 ease-in-out transform group-hover:scale-125 group-hover:rotate-2 max-w-full max-h-full object-contain"
+              class="transition-transform duration-300 ease-in-out transform group-hover:scale-125 group-hover:rotate-2 max-w-full maxh-full object-contain"
               alt="Shoes"
             />
           </div>
-          <div class="card-body z-20 items-center text-center">
+          <div class="py-5 pb-10 z-20 items-center text-center border   shadow-lg"  style="border-color: rgba(190, 197, 203, 0.2);">
             <span class="text-xl font-semibold text-[#3D464D]">Shoes!</span>
-            <div class="flex gap-3 items-center">
+            <div class="flex gap-3 items-center justify-center">
               <span class="text-lg font-bold text-[#3D464D]">$500.00</span>
               <span class="text-[15px] text-[#6C757D] font-normal line-through"
                 >$900.00</span
               >
             </div>
-            <div class="">
+            <div class=" flex gap-2 items-center justify-center">
+              <Rating :rating="currentRating" />
+              <span class="text-sm font-normal">(99)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Featured Products section -->
+    <div class="mt-10 px-8 flex items-center">
+    <div class="flex-shrink-0">
+    <span class="text-[35px] font-semibold text-[#3D464D]">FEATURED PRODUCTS</span>
+  </div>
+  <!-- Dashed Border Container -->
+  <div class="flex-grow border-b border-dashed border-[#BEC5CB] ml-4 mt-2"></div>
+</div>
+    <div
+      class="grid lg:grid-cols-4 gap-8 md:grid-cols-2 xs:grid-cols-1 px-8 py-5 mt-3"
+    >
+      <div class="col-span-1 group" v-for="item in categories" :key="item.id">
+        <div class="card card-compact bg-white   rounded-[1px] w-full h-[400px]">
+          <!-- Custom height -->
+          <div
+            class="overflow-hidden h-full w-full  flex justify-center items-center"
+          >
+            <img
+              src="/image/cam.jpg"
+              class="transition-transform duration-300 ease-in-out transform group-hover:scale-125 group-hover:rotate-2 max-w-full maxh-full object-contain"
+              alt="Shoes"
+            />
+          </div>
+          <div class="py-5 pb-10 z-20 items-center text-center border   shadow-lg"  style="border-color: rgba(190, 197, 203, 0.2);">
+            <span class="text-xl font-semibold text-[#3D464D]">Shoes!</span>
+            <div class="flex gap-3 items-center justify-center">
+              <span class="text-lg font-bold text-[#3D464D]">$500.00</span>
+              <span class="text-[15px] text-[#6C757D] font-normal line-through"
+                >$900.00</span
+              >
+            </div>
+            <div class=" flex gap-2 items-center justify-center">
               <Rating :rating="currentRating" />
               <span class="text-sm font-normal">(99)</span>
             </div>
@@ -212,7 +248,7 @@
 
 <script>
 import rating from "../components/global/rating.vue";
-
+import { mapActions } from "vuex";
 export default {
   name: "IndexPage",
   components: { rating },
@@ -332,7 +368,11 @@ export default {
       ],
     };
   },
+  async mounted(){
+    await this.fetchCategories()
+  },
   methods: {
+    ...mapActions('modules/products',['fetchCategories']),
     setActive(index) {
       this.activeIndex = index; // Set the active item based on the clicked index
     },
