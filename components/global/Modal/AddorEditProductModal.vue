@@ -1,6 +1,7 @@
 <template>
   <div>
     <!-- You can open the modal using ID.showModal() method -->
+{{ product.name }}
     <button
       class="btn bg-primary text-secondary hover:bg-secondary hover:text-white"
       onclick="my_modal_3.showModal()"
@@ -11,53 +12,102 @@
       <div class="modal-box">
         <form method="dialog">
           <button
-            class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            class="btn btn-sm btn-circle btn-ghost absolute right-2 top-4"
           >
             ✕
           </button>
         </form>
         <h3 class="text-lg font-bold">Add New Product</h3>
-        <div>
-          <input
-            type="file"
-            class="file-input file-input-bordered w-full max-w-xs"
-          />
+        <div class="flex flex-col gap-3 mt-3">
+          <div>
+            <input
+              type="file"
+              class="file-input file-input-bordered w-full"
+              @input="handleFileUpload"
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              v-model="product.name"
+              placeholder="Product Title"
+              class="input input-bordered w-full"
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              v-model="product.price"
+              placeholder="Product Price"
+              class="input input-bordered w-full"
+            />
+          </div>
+          <div>
+            <textarea
+              class="textarea textarea-bordered w-full"
+              v-model="product.description"
+              placeholder="Bio"
+            ></textarea>
+          </div>
+          <div>
+            <input
+              type="text"
+              v-model="product.discount"
+              placeholder="Discount Available"
+              class="input input-bordered w-full"
+            />
+          </div>
+          <div>
+            <input
+              type="date"
+              v-model="product.endDate"
+              placeholder="Discount Date"
+              class="input input-bordered w-full"
+            />
+          </div>
+          <div>
+            <select
+              class="select select-bordered w-full"
+              v-model="selectedCategory"
+            >
+              <!-- Iterate over getCategories to create options -->
+              <option
+                v-for="category in getCategories"
+                :key="category.id"
+                :value="category"
+              >
+                {{ category.name }}
+              </option>
+            </select>
+          </div>
+          <div class="flex justify-between items-center">
+            <div class="form-control">
+              <label class="label cursor-pointer flex gap-3 items-center">
+                <span class="label-text">New Arrival</span>
+                <input
+                  type="checkbox"
+                  :checked="isNewArrival"
+                  class="checkbox"
+                  @change="handleArrival"
+                />
+              </label>
+            </div>
+            <div class="form-control">
+              <label class="label cursor-pointer flex gap-3 items-center">
+                <span class="label-text">Best Seller</span>
+                <input
+                  type="checkbox"
+                  :checked="isBestSeller"
+                  class="checkbox"
+                  @change="handleBestSeller"
+                />
+              </label>
+            </div>
+          </div>
         </div>
-        <div>
-          <input
-            type="text"
-            v-modal="product.name"
-            placeholder="Product Title"
-            class="input input-bordered w-full max-w-xs"
-          />
-        </div>
-        <div>
-          <input
-            type="text"
-            v-modal="product.price"
-            placeholder="Product Price"
-            class="input input-bordered w-full max-w-xs"
-          />
-        </div>
-        <div>
-          <textarea
-            class="textarea textarea-bordered"
-            placeholder="Bio"
-          ></textarea>
-        </div>
-        <div>
-          <input
-            type="text"
-            v-modal="product.discount"
-            placeholder="Discount Available"
-            class="input input-bordered w-full max-w-xs"
-          />
-        </div>
-        <div>
-          <select class="select select-bordered w-full max-w-xs">
-            <option>Han Solo</option>
-            <option>Greedo</option>
-          </select>
+        <div class="modal-action flex gap-3 justify-end">
+          <button class="btn btn-primary" @click="handleSubmit">Save</button>
+          <button class="btn" onclick="my_modal_3.close()">Cancel</button>
         </div>
       </div>
     </dialog>
@@ -65,17 +115,68 @@
 </template>
 
 <script>
+
+import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
+      selectedCategory: null,
+      isNewArrival: false,
+      isBestSeller: false,
       product: {
         name: "",
         description: "",
         price: "",
-        category: "",
+        discount: "",
         image: "",
       },
     };
+  },
+  computed: {
+     ...mapGetters("modules/products", ["getCategories"])
+    },
+    methods: {
+    ...mapActions("modules/products", ["createProduct"]),
+    async handleSubmit() {
+      const formData = new FormData();
+      formData.append("name", this.product.name);
+      formData.append("description", this.product.description);
+      formData.append("price", this.product.price);
+      formData.append("discountPercentage", this.product.discount);
+      formData.append("picture", this.product.image);
+      formData.append("endDate", this.product.endDate);
+      formData.append("category", this.selectedCategory.id);
+      formData.append("isNewArrival", this.isNewArrival);
+      formData.append("isPopular", this.isBestSeller);
+      const response = await this.createProduct(formData);
+      if (response.ok) {
+        console.log("Product created successfully");
+      }
+    },
+    handleFileUpload(e) {
+      console.log(e.target.files[0]);
+      this.product.image = e.target.files[0];
+    },
+    handleArrival(e) {
+      this.isNewArrival = !this.isNewArrival;
+    },
+    handleBestSeller() {
+      this.isBestSeller = !this.isBestSeller;
+    },
+    //   if (this.selectedCategory) {
+
+    //     // Construct the payload with the selected category
+    //     const payload = {
+    //       categoryId: this.selectedCategory.id,
+    //       categoryName: this.selectedCategory.name,
+    //     };
+
+    //     // Here you would send the payload to your backend or use it as needed
+    //     console.log('Payload to send:', payload);
+    //   } else {
+    //     console.log('No category selected.');
+    //   }
+    // },
   },
 };
 </script>

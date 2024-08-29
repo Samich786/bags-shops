@@ -22,6 +22,7 @@ export default {
   plugins: [
     "~/plugins/axios.js", // Register the plugin
     "~/plugins/end-points.js", // Register the plugin
+    "~/plugins/presist-state.js",
   ],
 
   // Environment variables
