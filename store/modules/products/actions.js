@@ -8,4 +8,13 @@ export default {
       return error;
     }
   },
+  async fetchNewArrivalsData({ commit }, payload) {
+    console.log(payload);
+    try {
+      const response = await this.$axios.get(this.$API.NEWARRIVALS);
+      return response;
+    } catch (error) {
+      return error;
+    }
+  },
 };

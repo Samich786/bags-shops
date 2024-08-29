@@ -143,12 +143,12 @@
       >
         <div class="grid grid-cols-8 items-center overflow-hidden">
           <!-- Image Container -->
-          <div class="col-span-3 overflow-hidden px-2">
+          <div class="col-span-3 overflow-hidden px-2 py-1">
             <!-- Image with zoom effect on card hover -->
             <img
               :src="item.img"
               alt=""
-              class="h-full w-full transition-transform duration-300 ease-in-out transform group-hover:scale-125 group-hover:rotate-2"
+              class="h-32 w-32 transition-transform duration-300 ease-in-out transform group-hover:scale-125 group-hover:rotate-2"
             />
           </div>
 
@@ -157,8 +157,11 @@
             class="col-span-5 z-20 flex flex-col items-start pl-5 h-full justify-center group-hover:bg-[#FFD333]"
           >
             <span class="text-lg font-bold">{{ item.name }}</span>
-            <span class="text-sm font-normal mt-1"
-              >{{ item.count }} Products</span
+            <span v-if="item?.productCount > 0" class="text-sm font-normal mt-1"
+              >{{ item?.productCount }} Products</span
+            >
+            <span v-else class="text-sm font-normal mt-1"
+              >{{ item?.count }} Products</span
             >
           </div>
         </div>
@@ -166,21 +169,25 @@
     </div>
     <!-- New Arrivals section -->
     <div class="mt-10 px-8 flex items-center">
-  <!-- Title Container -->
-  <div class="flex-shrink-0">
-    <span class="text-[35px] font-semibold text-[#3D464D]">NEW ARRIVALS</span>
-  </div>
-  <!-- Dashed Border Container -->
-  <div class="flex-grow border-b border-dashed border-[#BEC5CB] ml-4 mt-2"></div>
-</div>
+      <!-- Title Container -->
+      <div class="flex-shrink-0">
+        <span class="text-[35px] font-semibold text-[#3D464D]"
+          >NEW ARRIVALS</span
+        >
+      </div>
+      <!-- Dashed Border Container -->
+      <div
+        class="flex-grow border-b border-dashed border-[#BEC5CB] ml-4 mt-2"
+      ></div>
+    </div>
     <div
       class="grid lg:grid-cols-4 gap-8 md:grid-cols-2 xs:grid-cols-1 px-8 py-5 mt-3"
     >
       <div class="col-span-1 group" v-for="item in categories" :key="item.id">
-        <div class="card card-compact bg-white   rounded-[1px] w-full h-[400px]">
+        <div class="card card-compact bg-white rounded-[1px] w-full h-[400px]">
           <!-- Custom height -->
           <div
-            class="overflow-hidden h-full w-full  flex justify-center items-center"
+            class="overflow-hidden h-full w-full flex justify-center items-center"
           >
             <img
               src="/image/cam.jpg"
@@ -188,7 +195,10 @@
               alt="Shoes"
             />
           </div>
-          <div class="py-5 pb-10 z-20 items-center text-center border   shadow-lg"  style="border-color: rgba(190, 197, 203, 0.2);">
+          <div
+            class="py-5 pb-10 z-20 items-center text-center border shadow-lg"
+            style="border-color: rgba(190, 197, 203, 0.2)"
+          >
             <span class="text-xl font-semibold text-[#3D464D]">Shoes!</span>
             <div class="flex gap-3 items-center justify-center">
               <span class="text-lg font-bold text-[#3D464D]">$500.00</span>
@@ -196,7 +206,7 @@
                 >$900.00</span
               >
             </div>
-            <div class=" flex gap-2 items-center justify-center">
+            <div class="flex gap-2 items-center justify-center">
               <Rating :rating="currentRating" />
               <span class="text-sm font-normal">(99)</span>
             </div>
@@ -206,20 +216,24 @@
     </div>
     <!-- Featured Products section -->
     <div class="mt-10 px-8 flex items-center">
-    <div class="flex-shrink-0">
-    <span class="text-[35px] font-semibold text-[#3D464D]">FEATURED PRODUCTS</span>
-  </div>
-  <!-- Dashed Border Container -->
-  <div class="flex-grow border-b border-dashed border-[#BEC5CB] ml-4 mt-2"></div>
-</div>
+      <div class="flex-shrink-0">
+        <span class="text-[35px] font-semibold text-[#3D464D]"
+          >FEATURED PRODUCTS</span
+        >
+      </div>
+      <!-- Dashed Border Container -->
+      <div
+        class="flex-grow border-b border-dashed border-[#BEC5CB] ml-4 mt-2"
+      ></div>
+    </div>
     <div
       class="grid lg:grid-cols-4 gap-8 md:grid-cols-2 xs:grid-cols-1 px-8 py-5 mt-3"
     >
       <div class="col-span-1 group" v-for="item in categories" :key="item.id">
-        <div class="card card-compact bg-white   rounded-[1px] w-full h-[400px]">
+        <div class="card card-compact bg-white rounded-[1px] w-full h-[400px]">
           <!-- Custom height -->
           <div
-            class="overflow-hidden h-full w-full  flex justify-center items-center"
+            class="overflow-hidden h-full w-full flex justify-center items-center"
           >
             <img
               src="/image/cam.jpg"
@@ -227,7 +241,10 @@
               alt="Shoes"
             />
           </div>
-          <div class="py-5 pb-10 z-20 items-center text-center border   shadow-lg"  style="border-color: rgba(190, 197, 203, 0.2);">
+          <div
+            class="py-5 pb-10 z-20 items-center text-center border shadow-lg"
+            style="border-color: rgba(190, 197, 203, 0.2)"
+          >
             <span class="text-xl font-semibold text-[#3D464D]">Shoes!</span>
             <div class="flex gap-3 items-center justify-center">
               <span class="text-lg font-bold text-[#3D464D]">$500.00</span>
@@ -235,7 +252,7 @@
                 >$900.00</span
               >
             </div>
-            <div class=" flex gap-2 items-center justify-center">
+            <div class="flex gap-2 items-center justify-center">
               <Rating :rating="currentRating" />
               <span class="text-sm font-normal">(99)</span>
             </div>
@@ -256,6 +273,8 @@ export default {
     return {
       currentRating: 4,
       activeIndex: 0, // Tracks the current active carousel item
+      categories: [],
+      newArrivals: [],
       items: [
         {
           src: "https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.webp",
@@ -304,77 +323,94 @@ export default {
           name: "24/7 Support",
         },
       ],
-      categories: [
-        {
-          id: 1,
-          name: "Electronics",
-          img: "/image/cam.jpg",
-          count: 100,
-        },
-        {
-          id: 2,
-          name: "Clothing",
-          img: "/image/cam.jpg",
-          count: 100,
-        },
-        {
-          id: 3,
-          name: "Footwear",
-          img: "/image/cam.jpg",
-          count: 100,
-        },
-        {
-          id: 4,
-          name: "Shoes",
-          img: "/image/cam.jpg",
-          count: 100,
-        },
-        {
-          id: 5,
-          name: "Sports Products",
-          img: "/image/cam.jpg",
-          count: 100,
-        },
-        {
-          id: 6,
-          name: "Watches",
-          img: "/image/cam.jpg",
-          count: 100,
-        },
-        {
-          id: 7,
-          name: "Beauty Fashion",
-          img: "/image/cam.jpg",
-          count: 100,
-        },
-        {
-          id: 8,
-          name: "Tech Devices",
-          img: "/image/cam.jpg",
-          count: 100,
-        },
-        {
-          id: 9,
-          name: "Kids Products",
-          img: "/image/cam.jpg",
-          count: 100,
-        },
-        {
-          id: 10,
-          name: "Home Decor",
-          img: "/image/cam.jpg",
-          count: 100,
-        },
-      ],
+      // categories: [
+      //   {
+      //     id: 1,
+      //     name: "Electronics",
+      //     img: "/image/cam.jpg",
+      //     count: 100,
+      //   },
+      //   {
+      //     id: 2,
+      //     name: "Clothing",
+      //     img: "/image/cam.jpg",
+      //     count: 100,
+      //   },
+      //   {
+      //     id: 3,
+      //     name: "Footwear",
+      //     img: "/image/cam.jpg",
+      //     count: 100,
+      //   },
+      //   {
+      //     id: 4,
+      //     name: "Shoes",
+      //     img: "/image/cam.jpg",
+      //     count: 100,
+      //   },
+      //   {
+      //     id: 5,
+      //     name: "Sports Products",
+      //     img: "/image/cam.jpg",
+      //     count: 100,
+      //   },
+      //   {
+      //     id: 6,
+      //     name: "Watches",
+      //     img: "/image/cam.jpg",
+      //     count: 100,
+      //   },
+      //   {
+      //     id: 7,
+      //     name: "Beauty Fashion",
+      //     img: "/image/cam.jpg",
+      //     count: 100,
+      //   },
+      //   {
+      //     id: 8,
+      //     name: "Tech Devices",
+      //     img: "/image/cam.jpg",
+      //     count: 100,
+      //   },
+      //   {
+      //     id: 9,
+      //     name: "Kids Products",
+      //     img: "/image/cam.jpg",
+      //     count: 100,
+      //   },
+      //   {
+      //     id: 10,
+      //     name: "Home Decor",
+      //     img: "/image/cam.jpg",
+      //     count: 100,
+      //   },
+      // ],
     };
   },
-  async mounted(){
-    await this.fetchCategories()
+  async mounted() {
+    const response = await this.fetchCategories();
+    if (response.status === 200) {
+      this.categories = response.data?.data?.categories;
+    }
+    await this.fetchNewArrivals();
   },
   methods: {
-    ...mapActions('modules/products',['fetchCategories']),
+    ...mapActions("modules/products", [
+      "fetchCategories",
+      "fetchNewArrivalsData",
+    ]),
     setActive(index) {
       this.activeIndex = index; // Set the active item based on the clicked index
+    },
+    async fetchNewArrivals() {
+      try {
+        const response = await this.fetchNewArrivalsData();
+        if (response.status === 200) {
+          this.newArrivals = response.data?.data?.categories;
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };

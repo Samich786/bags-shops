@@ -1,7 +1,8 @@
 const url = {
   LOGINAdmin: "/auth/login",
   REGISTER: "/users/register",
-  CATEGORIES:"products/categortcount"
+  CATEGORIES: "products/categortcount",
+  NEWARRIVALS: "products/newarrialproducts",
 };
 
 export default ({ app }, inject) => {
