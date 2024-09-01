@@ -1,7 +1,6 @@
 <template>
   <div>
     <!-- You can open the modal using ID.showModal() method -->
-{{ product.name }}
     <button
       class="btn bg-primary text-secondary hover:bg-secondary hover:text-white"
       onclick="my_modal_3.showModal()"
@@ -139,13 +138,13 @@ export default {
     ...mapActions("modules/products", ["createProduct"]),
     async handleSubmit() {
       const formData = new FormData();
-      formData.append("name", this.product.name);
-      formData.append("description", this.product.description);
-      formData.append("price", this.product.price);
-      formData.append("discountPercentage", this.product.discount);
-      formData.append("picture", this.product.image);
-      formData.append("endDate", this.product.endDate);
-      formData.append("category", this.selectedCategory.id);
+      formData.append("name", this.product?.name);
+      formData.append("description", this.product?.description);
+      formData.append("price", this.product?.price);
+      formData.append("discountPercentage", this.product?.discount);
+      formData.append("picture", this.product?.image);
+      formData.append("endDate", this.product?.endDate);
+      formData.append("category", this.selectedCategory?.id);
       formData.append("isNewArrival", this.isNewArrival);
       formData.append("isPopular", this.isBestSeller);
       const response = await this.createProduct(formData);

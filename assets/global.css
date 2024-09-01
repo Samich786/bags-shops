@@ -10,3 +10,9 @@
 .bg-secondary {
   background-color: #3d464d !important;
 }
+.border-primary {
+  border-color: #ffd333 !important;
+}
+.border-secondary {
+  border-color: #3d464d !important;
+}

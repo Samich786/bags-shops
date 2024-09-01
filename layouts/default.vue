@@ -4,6 +4,7 @@
       <TopHeader />
       <div class="bg-[#F5F5F5] scroll-container mt-16">
         <Nuxt />
+        <Footer />
       </div>
     </div>
   </div>
@@ -11,10 +12,12 @@
 
 <script>
 import TopHeader from "~/components/layouts/Header.vue";
+import Footer from "../components/layouts/Footer.vue";
 
 export default {
   components: {
     TopHeader,
+    Footer
   },
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="fixed top-0  w-full z-50 flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8 bg-[#3D464D] border-b border-white"
+      class="fixed top-0 w-full z-50 flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8 bg-[#3D464D] border-b border-white"
     >
       <div class="flex items-center gap-20">
         <div
@@ -74,11 +74,19 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
       isOpenCategory: false,
-      categoriesType: "",
+      filter: {
+        page: 1,
+        limit: 20,
+        isPopular: false,
+        isNewArrival: false,
+        discount: false,
+        categoriesType: "",
+      },
       menueItem: [
         {
           id: 1,
@@ -122,36 +130,33 @@ export default {
         },
         {
           id: 3,
-          name: "Footwear",
-        },
-        {
-          id: 4,
           name: "Shoes",
         },
         {
-          id: 5,
-          name: "Sports & Outdoors",
+          id: 4,
+          name: "Sports Products",
         },
         {
-          id: 6,
+          id: 5,
           name: "Watches",
         },
         {
+          id: 6,
+          name: "Beauty Fashion",
+        },
+        {
           id: 7,
-          name: "Beauty Products",
+          name: "Tech Devices",
         },
         {
           id: 8,
-          name: "Computers & Tablets",
+          name: "Kids Products",
         },
         {
           id: 9,
-          name: "Kids & Baby Products",
-        },
-        {
-          id: 10,
           name: "Home Decor",
         },
+        // ...other categories
       ],
     };
   },
@@ -171,6 +176,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions("modules/products", ["fetchAllProductsData"]),
     setActive(item) {
       console.log(item);
       this.menueItem.forEach((item) => {
@@ -179,9 +185,14 @@ export default {
       item.isActive = true;
       this.$router.push(item.router);
     },
-    selectCategory(data) {
-      this.categoriesType = data.name;
-      // this.isOpenCategory = false;
+    async selectCategory(data) {
+      this.filter.categoriesType = data.name;
+      const filterData={
+        filter:this.filter
+      }
+      await this.fetchAllProductsData(filterData);
+      this.$router.push(`/products?categoriesType=${data.name}`);
+      
     },
     async logout() {
       try {

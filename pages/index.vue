@@ -141,14 +141,14 @@
         v-for="item in categories"
         :key="item.id"
       >
-        <div class="grid grid-cols-8 items-center overflow-hidden">
+        <div class="grid grid-cols-8 items-center overflow-hidden" @click="selectCategory(item)">
           <!-- Image Container -->
           <div class="col-span-3 overflow-hidden px-2 py-1">
             <!-- Image with zoom effect on card hover -->
             <img
               :src="item.img"
               alt=""
-              class="h-32 w-32 transition-transform duration-300 ease-in-out transform group-hover:scale-125 group-hover:rotate-2"
+              class="h-32 w-32 transition-transform duration-300 ease-in-out transform group-hover:scale-125 group-hover:rotate-2 object-contain"
             />
           </div>
 
@@ -183,14 +183,14 @@
     <div
       class="grid lg:grid-cols-4 gap-8 md:grid-cols-2 xs:grid-cols-1 px-8 py-5 mt-3"
     >
-      <div class="col-span-1 group" v-for="item in newArrivals" :key="item.id">
+      <div class="col-span-1 group" v-for="item in newArrivals" :key="item?.id">
         <div class="card card-compact bg-white rounded-[1px] w-full h-[400px]">
           <!-- Custom height -->
           <div
             class="overflow-hidden h-full w-full flex justify-center items-center"
           >
             <img
-              :src="item.picture"
+              :src="item?.picture"
               class="transition-transform duration-300 ease-in-out transform group-hover:scale-125 group-hover:rotate-2 max-w-full maxh-full object-contain"
               alt="Shoes"
             />
@@ -199,16 +199,16 @@
             class="py-5 pb-10 z-20 items-center text-center border shadow-lg"
             style="border-color: rgba(190, 197, 203, 0.2)"
           >
-            <span class="text-xl font-semibold text-[#3D464D]">{{ item.name }}</span>
+            <span class="text-xl font-semibold text-[#3D464D]">{{ item?.name }}</span>
             <div class="flex gap-3 items-center justify-center">
-              <span v-if="item?.discountPrice>0" class="text-lg font-bold text-[#3D464D]">{{ item.discountPrice }}</span>
-              <span v-else class="text-lg font-bold text-[#3D464D]">{{ item.price }}</span>
+              <span v-if="item?.discountPrice>0" class="text-lg font-bold text-[#3D464D]">${{ item?.discountPrice }}</span>
+              <span v-else class="text-lg font-bold text-[#3D464D]">${{ item?.price }}</span>
               <span v-if="item?.discountPrice>0" class="text-[15px] text-[#6C757D] font-normal line-through"
-                >$900.00</span
+                >${{ item?.price }}</span
               >
             </div>
             <div class="flex gap-2 items-center justify-center">
-              <Rating :rating="currentRating" />
+              <Rating :rating="item?.rating" />
               <span class="text-sm font-normal">(99)</span>
             </div>
           </div>
@@ -230,14 +230,14 @@
     <div
       class="grid lg:grid-cols-4 gap-8 md:grid-cols-2 xs:grid-cols-1 px-8 py-5 mt-3"
     >
-      <div class="col-span-1 group" v-for="item in categories" :key="item.id">
+      <div class="col-span-1 group" v-for="item in popularProducts" :key="item.id">
         <div class="card card-compact bg-white rounded-[1px] w-full h-[400px]">
           <!-- Custom height -->
           <div
             class="overflow-hidden h-full w-full flex justify-center items-center"
           >
             <img
-              src="/image/cam.jpg"
+              :src="item?.picture"
               class="transition-transform duration-300 ease-in-out transform group-hover:scale-125 group-hover:rotate-2 max-w-full maxh-full object-contain"
               alt="Shoes"
             />
@@ -246,15 +246,16 @@
             class="py-5 pb-10 z-20 items-center text-center border shadow-lg"
             style="border-color: rgba(190, 197, 203, 0.2)"
           >
-            <span class="text-xl font-semibold text-[#3D464D]">Shoes!</span>
+            <span class="text-xl font-semibold text-[#3D464D]">{{ item?.name }}</span>
             <div class="flex gap-3 items-center justify-center">
-              <span class="text-lg font-bold text-[#3D464D]">$500.00</span>
-              <span class="text-[15px] text-[#6C757D] font-normal line-through"
-                >$900.00</span
+              <span v-if="item?.discountPrice>0" class="text-lg font-bold text-[#3D464D]">${{ item?.discountPrice }}</span>
+              <span v-else class="text-lg font-bold text-[#3D464D]">${{ item?.price }}</span>
+              <span v-if="item?.discountPrice>0" class="text-[15px] text-[#6C757D] font-normal line-through"
+                >${{ item?.price }}</span
               >
             </div>
             <div class="flex gap-2 items-center justify-center">
-              <Rating :rating="currentRating" />
+              <Rating :rating="item?.rating" />
               <span class="text-sm font-normal">(99)</span>
             </div>
           </div>
@@ -276,6 +277,15 @@ export default {
       activeIndex: 0, // Tracks the current active carousel item
       categories: [],
       newArrivals: [],
+      popularProducts:[],
+      filter: {
+        page: 1,
+        limit: 20,
+        isPopular: false,
+        isNewArrival: false,
+        discount: false,
+        categoriesType: "",
+      },
       items: [
         {
           src: "https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.webp",
@@ -394,14 +404,28 @@ export default {
       this.categories = response.data?.data?.categories;
     }
     await this.fetchNewArrivals();
+    await this.fetchPopular();
   },
   methods: {
     ...mapActions("modules/products", [
       "fetchCategories",
       "fetchNewArrivalsData",
+      "fetchPopularData",
     ]),
     setActive(index) {
       this.activeIndex = index; // Set the active item based on the clicked index
+    },
+    async fetchPopular() {
+      try {
+        const response = await this.fetchPopularData();
+        if (response.status === 200) {
+          console.log(response.data.data.data);
+          
+          this.popularProducts = response.data?.data?.data?.products;
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
     async fetchNewArrivals() {
       try {
@@ -415,6 +439,10 @@ export default {
         console.log(error);
       }
     },
+    selectCategory(data){
+      this.filter.categoriesType = data.name;
+      this.$router.push(`/products?categoriesType=${data.name}`);
+    }
   },
 };
 </script>
