@@ -114,7 +114,6 @@
 </template>
 
 <script>
-
 import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
@@ -128,13 +127,14 @@ export default {
         price: "",
         discount: "",
         image: "",
+        endDate: "",
       },
     };
   },
   computed: {
-     ...mapGetters("modules/products", ["getCategories"])
-    },
-    methods: {
+    ...mapGetters("modules/products", ["getCategories"]),
+  },
+  methods: {
     ...mapActions("modules/products", ["createProduct"]),
     async handleSubmit() {
       const formData = new FormData();
